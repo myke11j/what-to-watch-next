@@ -11,20 +11,21 @@ Blog Link: TBD
 - Recommender System: Python, pandas
 - ETL and CRON: Python
 - Dataset: Movielens
-- AWS: S3
+- AWS: S3, DynamoDB
 - Deployed using Heroku
 
 # Setup
 
 Make sure you have installed these:
 
-- Python
-- Node.js
-- have aws iam tokens
+- Python3
+- have aws iam tokens (and setup in ~/.aws/credentials and ~/.aws/config)
 
 ## create-recommendation
 
 ### Download dataset from s3
+
+This module will fetch dataset from S3 and create recommendation for every movie and save in dynamodb.
 
 - cd in module
 - Make sure you have movie lens dataset somewhere in your s3
