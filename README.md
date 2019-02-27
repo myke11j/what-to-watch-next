@@ -32,4 +32,4 @@ Make sure you have installed these:
 - Run `python3 fetch-dataset-from-s3.py`
 - You should see files in /tmp/ folder if you have not got any error 
 - Then to create a csv of recommendation of every title with ratings, run `python3 create-recommendation.py`
-- Created recommendation will get saved in database (TBD) and in csv file at 'output/recommendation.csv'
+- Created recommendation will get saved in database (dynamodb) and in csv file at 'output/recommendation.csv' (tbd)

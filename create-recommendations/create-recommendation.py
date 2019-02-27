@@ -5,12 +5,14 @@
 
 
 # Import necessary libraries
-
+import boto3
 import pandas as pd 
 import numpy as np
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
+
+client = boto3.client('dynamodb', region_name='us-east-1')
 
 print('Pandas version', pd.__version__)
 print('Numpy version', np.__version__)
@@ -56,7 +58,7 @@ movie_matrix = df.pivot_table(index='userId', columns='title', values='rating')
 
 # In[61]:
 
-movie_recommendation_matrix = movie_matrix
+
 for movie in movie_matrix:
     movieTitle = movie_matrix[movie]
     similarityCorr = movie_matrix.corrwith(movieTitle)
@@ -66,6 +68,16 @@ for movie in movie_matrix:
     corr_movie_title = pd.merge(corr_movie_title, averageRatingsDf, on='title')
     if (corr_movie_title.size > 0):
         movieRec = corr_movie_title[corr_movie_title['numberOfRatings'] > 50 ].sort_values(by='Correlation', ascending=False).head(10)
-        # print(movie, movieRec)
-        movie_recommendation_matrix[ movie_recommendation_matrix['title'] == movieTitle ]['recommendations'] = movieRec
-        movie_recommendation_matrix.to_csv('./output/recommendations.csv')
+        print(movie, movieRec.index.tolist())
+        client.put_item(
+            TableName='what-to-watch-next',
+            Item={
+                'movieTitle': {
+                    'S': movie
+                },
+                'recommendations': {
+                    'SS': movieRec.index.tolist()
+                }
+            }
+        )
+        # averageRatingsDf.to_csv('./output/recommendations.csv')
