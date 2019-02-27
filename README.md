@@ -12,7 +12,6 @@ Blog Link: TBD
 - Web service: Nodejs
 - Dataset: Movielens
 - AWS: S3, DynamoDB
-- Deployed using Heroku
 
 # Setup
 
